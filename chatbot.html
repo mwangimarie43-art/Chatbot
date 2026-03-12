@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey Phill 🍳 — Just For You</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --espresso:  #1C0F07;
+  --coffee:    #2E1A0E;
+  --mocha:     #4A2C1A;
+  --amber:     #E8920A;
+  --amber-lt:  #F5B942;
+  --saffron:   #F0C060;
+  --cream:     #FBF3E4;
+  --cream-dk:  #F0E0C4;
+  --burnt:     #C45C1A;
+  --rose:      #D4847A;
+  --sage:      #7A9E6A;
+  --ink:       #1C0F07;
+  --muted:     #9A7A5A;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Lato',sans-serif;
+  background:var(--espresso);
+  color:var(--cream);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── Custom cursor ── */
+.cursor{
+  width:12px;height:12px;
+  background:var(--amber);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.15s ease;
+  mix-blend-mode:difference;
+}
+.cursor-trail{
+  width:32px;height:32px;
+  border:1.5px solid var(--amber-lt);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+  transition:all 0.25s ease;
+  opacity:0.5;
+}
+
+/* ── Ambient glow ── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, #E8920A0C 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, #C45C1A08 0%, transparent 60%);
+  z-index:0;
+}
+
+/* ── Floating particles ── */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{
+  position:absolute;
+  border-radius:50%;
+  animation:float linear infinite;
+  opacity:0;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:0.6;}
+  100%{transform:translateY(-100px) rotate(720deg);opacity:0;}
+}
+
+/* ── Sections ── */
+section{position:relative;z-index:1;}
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+  position:relative;
+  overflow:hidden;
+}
+
+#hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, #2E1A0E 0%, #1C0F07 100%);
+}
+
+.steam{
+  position:absolute;
+  bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:100%;height:200px;
+  background:linear-gradient(0deg,rgba(232,146,10,0.05) 0%,transparent 100%);
+  pointer-events:none;
+}
+
+.hero-content{position:relative;z-index:2;max-width:700px;}
+
+.greeting-tag{
+  display:inline-block;
+  background:rgba(232,146,10,0.15);
+  border:1px solid rgba(232,146,10,0.3);
+  border-radius:20px;
+  padding:6px 18px;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--amber-lt);
+  margin-bottom:20px;
+  animation:fadeDown 0.8s ease both;
+}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,5.5rem);
+  font-weight:900;
+  line-height:1;
+  margin-bottom:16px;
+  animation:fadeDown 0.8s 0.1s ease both;
+}
+.hero-title span{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--amber),var(--saffron),var(--amber-lt));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-size:1.15rem;
+  font-weight:300;
+  color:var(--cream-dk);
+  line-height:1.7;
+  margin-bottom:32px;
+  animation:fadeDown 0.8s 0.2s ease both;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--mocha),var(--coffee));
+  border:1px solid rgba(232,146,10,0.25);
+  border-radius:12px;
+  padding:14px 24px;
+  font-size:0.9rem;
+  font-weight:700;
+  color:var(--saffron);
+  margin-bottom:40px;
+  animation:fadeDown 0.8s 0.3s ease both;
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+.scroll-cta{
+  animation:fadeDown 0.8s 0.4s ease both;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:0.75rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);
+}
+.scroll-arrow{
+  width:24px;height:24px;
+  border-right:2px solid var(--amber);
+  border-bottom:2px solid var(--amber);
+  transform:rotate(45deg);
+  animation:bounce 1.5s infinite;
+}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0);}50%{transform:rotate(45deg) translateY(6px);}}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════════════════════════════
+   MORNING MESSAGE
+════════════════════════════ */
+#morning{
+  padding:80px 20px;
+  background:linear-gradient(180deg,var(--espresso) 0%,var(--coffee) 100%);
+}
+.morning-inner{
+  max-width:700px;margin:0 auto;text-align:center;
+}
+.section-tag{
+  display:inline-block;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--amber);margin-bottom:16px;
+}
+.morning-card{
+  background:linear-gradient(145deg,var(--mocha),#3A1F10);
+  border:1px solid rgba(232,146,10,0.2);
+  border-left:4px solid var(--amber);
+  border-radius:16px;
+  padding:36px 40px;
+  text-align:left;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  position:relative;overflow:hidden;
+}
+.morning-card::before{
+  content:'"';
+  position:absolute;top:-20px;right:20px;
+  font-family:'Playfair Display',serif;
+  font-size:8rem;color:rgba(232,146,10,0.08);
+  line-height:1;pointer-events:none;
+}
+.morning-text{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-style:italic;
+  line-height:1.8;color:var(--cream);
+  margin-bottom:20px;
+}
+.morning-sign{
+  font-size:0.85rem;color:var(--amber-lt);
+  font-weight:700;letter-spacing:1px;
+}
+.refresh-btn{
+  margin-top:24px;
+  background:none;
+  border:1.5px solid var(--amber);
+  border-radius:30px;
+  color:var(--amber);
+  padding:10px 24px;
+  font-size:0.8rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;font-family:'Lato',sans-serif;
+  transition:all 0.2s;
+}
+.refresh-btn:hover{background:var(--amber);color:var(--espresso);}
+
+/* ════════════════════════════
+   AFFIRMATIONS
+════════════════════════════ */
+#affirmations{
+  padding:80px 20px;
+  background:var(--coffee);
+}
+.aff-inner{max-width:900px;margin:0 auto;}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3rem);
+  font-weight:900;text-align:center;
+  margin-bottom:8px;
+}
+.section-title span{
+  font-style:italic;color:var(--amber);
+}
+.section-sub{
+  text-align:center;color:var(--muted);
+  font-size:0.9rem;margin-bottom:48px;
+}
+.aff-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+.aff-card{
+  background:linear-gradient(145deg,var(--mocha),var(--coffee));
+  border:1px solid rgba(232,146,10,0.15);
+  border-radius:16px;
+  padding:28px 24px;
+  position:relative;overflow:hidden;
+  transition:transform 0.25s,box-shadow 0.25s;
+  cursor:default;
+}
+.aff-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(232,146,10,0.2);
+}
+.aff-icon{
+  font-size:2rem;margin-bottom:14px;
+  display:block;
+}
+.aff-type{
+  font-size:0.68rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--amber);margin-bottom:10px;
+}
+.aff-text{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-style:italic;
+  line-height:1.7;color:var(--cream);
+}
+.aff-card.chef{border-top:2px solid var(--burnt);}
+.aff-card.personal{border-top:2px solid var(--amber);}
+.aff-card.job{border-top:2px solid var(--sage);}
+
+/* ════════════════════════════
+   ACHIEVEMENT BADGES
+════════════════════════════ */
+#badges{
+  padding:80px 20px;
+  background:linear-gradient(180deg,var(--coffee) 0%,var(--espresso) 100%);
+}
+.badges-inner{max-width:800px;margin:0 auto;text-align:center;}
+.badges-grid{
+  display:flex;flex-wrap:wrap;
+  justify-content:center;gap:16px;
+  margin-top:40px;
+}
+.badge-item{
+  background:linear-gradient(135deg,var(--mocha),#3A1F10);
+  border:1px solid rgba(232,146,10,0.25);
+  border-radius:20px;
+  padding:20px 24px;
+  min-width:180px;
+  transition:all 0.25s;
+  cursor:default;
+}
+.badge-item:hover{
+  transform:scale(1.05);
+  border-color:var(--amber);
+  box-shadow:0 8px 30px rgba(232,146,10,0.2);
+}
+.badge-emoji{font-size:2.5rem;display:block;margin-bottom:10px;}
+.badge-name{
+  font-size:0.78rem;font-weight:700;
+  color:var(--saffron);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.badge-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+
+/* ════════════════════════════
+   YOU MATTER
+════════════════════════════ */
+#youmatter{
+  padding:100px 20px;
+  background:var(--espresso);
+  text-align:center;
+}
+.youmatter-inner{max-width:650px;margin:0 auto;}
+.big-heart{
+  font-size:4rem;
+  display:block;margin-bottom:20px;
+  animation:heartbeat 1.5s ease infinite;
+}
+@keyframes heartbeat{0%,100%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);} 42%{transform:scale(1.1);}70%{transform:scale(1);}}
+.youmatter-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,6vw,3.5rem);
+  font-weight:900;font-style:italic;
+  color:var(--saffron);
+  margin-bottom:16px;
+  line-height:1.1;
+}
+.youmatter-body{
+  font-size:1.05rem;font-weight:300;
+  line-height:1.9;color:var(--cream-dk);
+  margin-bottom:40px;
+}
+.pills{
+  display:flex;flex-wrap:wrap;
+  justify-content:center;gap:10px;
+}
+.pill{
+  background:rgba(232,146,10,0.1);
+  border:1px solid rgba(232,146,10,0.25);
+  border-radius:30px;
+  padding:8px 18px;
+  font-size:0.82rem;font-weight:700;
+  color:var(--amber-lt);
+  transition:all 0.2s;
+}
+.pill:hover{background:var(--amber);color:var(--espresso);}
+
+/* ════════════════════════════
+   CHATBOT
+════════════════════════════ */
+#chatbot{
+  padding:80px 20px 100px;
+  background:linear-gradient(180deg,var(--espresso) 0%,var(--coffee) 100%);
+}
+.chat-wrapper{
+  max-width:600px;margin:0 auto;
+}
+.chat-header{text-align:center;margin-bottom:32px;}
+.chat-box{
+  background:var(--mocha);
+  border:1px solid rgba(232,146,10,0.2);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.5);
+}
+.chat-topbar{
+  background:linear-gradient(135deg,#3A1F10,var(--mocha));
+  padding:16px 20px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid rgba(232,146,10,0.15);
+}
+.chat-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--amber),var(--burnt));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.chat-bot-name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.05rem;color:var(--cream);
+}
+.chat-bot-sub{font-size:0.72rem;color:var(--amber-lt);}
+.online-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#4ADE80;margin-left:auto;
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.chat-messages{
+  height:380px;overflow-y:auto;
+  padding:20px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  scroll-behavior:smooth;
+}
+.chat-messages::-webkit-scrollbar{width:4px;}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--amber);opacity:0.3;border-radius:2px;}
+
+.msg{display:flex;flex-direction:column;max-width:80%;}
+.msg.bot{align-self:flex-start;}
+.msg.user{align-self:flex-end;}
+
+.msg-sender{
+  font-size:0.68rem;font-weight:700;
+  color:var(--amber);margin-bottom:3px;
+  padding:0 4px;
+  font-family:'Playfair Display',serif;font-style:italic;
+}
+
+.msg-bubble{
+  padding:10px 16px;
+  font-size:0.87rem;line-height:1.6;
+  white-space:pre-wrap;word-wrap:break-word;
+}
+.msg.bot .msg-bubble{
+  background:#FFFBF4;
+  color:var(--ink);
+  border-radius:4px 18px 18px 18px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.2);
+  border-top:2px solid var(--amber-lt);
+}
+.msg.user .msg-bubble{
+  background:linear-gradient(135deg,var(--burnt),var(--mocha));
+  color:var(--cream);
+  border-radius:18px 4px 18px 18px;
+  box-shadow:0 2px 10px rgba(196,92,26,0.3);
+}
+.msg-time{
+  font-size:0.62rem;color:var(--muted);
+  padding:2px 4px 0;
+}
+.msg.user .msg-time{text-align:right;}
+
+/* Quick replies */
+.quick-wrap{
+  padding:10px 16px;
+  display:flex;flex-wrap:wrap;gap:6px;
+  background:rgba(0,0,0,0.15);
+  border-top:1px solid rgba(232,146,10,0.1);
+}
+.qr{
+  background:rgba(232,146,10,0.1);
+  border:1px solid rgba(232,146,10,0.3);
+  color:var(--amber-lt);
+  border-radius:16px;
+  padding:5px 14px;
+  font-size:0.76rem;font-weight:700;
+  cursor:pointer;font-family:'Lato',sans-serif;
+  transition:all 0.15s;white-space:nowrap;
+}
+.qr:hover{background:var(--amber);color:var(--espresso);}
+
+/* Typing */
+.typing-row{
+  display:none;align-items:center;gap:10px;
+  padding:4px 16px 8px;
+}
+.typing-row.show{display:flex;}
+.typing-dots{
+  background:#FFFBF4;border-radius:16px;
+  padding:8px 14px;
+  display:flex;gap:4px;align-items:center;
+}
+.t-dot{
+  width:6px;height:6px;border-radius:50%;
+  animation:tpulse 1.2s infinite;
+}
+.t-dot:nth-child(1){background:var(--amber);}
+.t-dot:nth-child(2){background:var(--burnt);animation-delay:0.2s;}
+.t-dot:nth-child(3){background:var(--saffron);animation-delay:0.4s;}
+@keyframes tpulse{0%,80%,100%{transform:translateY(0);opacity:0.5;}40%{transform:translateY(-5px);opacity:1;}}
+
+/* Input */
+.chat-input-row{
+  padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(0,0,0,0.2);
+  border-top:1px solid rgba(232,146,10,0.1);
+}
+.chat-input{
+  flex:1;
+  background:rgba(255,255,255,0.08);
+  border:1.5px solid rgba(232,146,10,0.25);
+  border-radius:22px;
+  padding:10px 18px;
+  font-size:0.87rem;font-family:'Lato',sans-serif;
+  color:var(--cream);outline:none;
+  transition:border-color 0.2s;
+}
+.chat-input::placeholder{color:var(--muted);}
+.chat-input:focus{border-color:var(--amber);}
+.chat-send{
+  width:42px;height:42px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,var(--amber),var(--burnt));
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(232,146,10,0.4);
+  transition:all 0.2s;
+}
+.chat-send:hover{transform:scale(1.1);}
+.chat-send svg{fill:white;width:17px;height:17px;}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer{
+  padding:40px 20px;
+  text-align:center;
+  background:var(--espresso);
+  border-top:1px solid rgba(232,146,10,0.1);
+}
+.footer-heart{font-size:1.5rem;display:block;margin-bottom:10px;}
+.footer-text{
+  font-family:'Playfair Display',serif;
+  font-style:italic;font-size:1rem;
+  color:var(--muted);
+}
+.footer-text span{color:var(--amber);}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(28,15,7,0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter:blur(12px);
+  
+  border-bottom:1px solid rgba(232,146,10,0.1);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.1rem;
+  color:var(--amber);
+}
+.nav-links{display:flex;gap:20px;}
+.nav-links a{
+  font-size:0.78rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--amber);}
+
+/* Scroll reveal */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:all 0.7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">🍳 Chef Phill</div>
+  <div class="nav-links">
+    <a href="#morning">Morning</a>
+    <a href="#affirmations">Affirmations</a>
+    <a href="#badges">Badges</a>
+    <a href="#chatbot">Talk to Me</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="greeting-tag">✨ A message just for you</div>
+    <h1 class="hero-title">Hey, <span>Phill.</span></h1>
+    <p class="hero-sub">You had a rough day. That's okay, my love.<br>This space was made just for you — to remind you of who you are.</p>
+    <div class="hero-badge">
+      🏅 Chef Phill &nbsp;·&nbsp; Extraordinaire &nbsp;·&nbsp; Future Kitchen Legend
+    </div>
+    <div class="scroll-cta">
+      <span>Come inside</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
+  <div class="steam"></div>
+</section>
+
+<!-- ══ MORNING MESSAGE ══ -->
+<section id="morning">
+  <div class="morning-inner reveal">
+    <span class="section-tag">☀️ Morning Message</span>
+    <h2 class="section-title">Good morning,<br><span>Babe.</span></h2>
+    <div class="morning-card" id="morningCard">
+      <p class="morning-text" id="morningText">Loading your message...</p>
+      <p class="morning-sign">— With all my love 💛</p>
+    </div>
+    <br>
+    <button class="refresh-btn" onclick="newMorningMsg()">✨ New Message</button>
+  </div>
+</section>
+
+<!-- ══ AFFIRMATIONS ══ -->
+<section id="affirmations">
+  <div class="aff-inner reveal">
+    <h2 class="section-title">You are <span>enough.</span></h2>
+    <p class="section-sub">And then some, Phill. Read these slowly.</p>
+    <div class="aff-grid" id="affGrid"></div>
+  </div>
+</section>
+
+<!-- ══ BADGES ══ -->
+<section id="badges">
+  <div class="badges-inner reveal">
+    <span class="section-tag">🏆 Your Achievements</span>
+    <h2 class="section-title">Chef Phill's <span>Trophy Room</span></h2>
+    <p class="section-sub">Every single one of these is real, babe.</p>
+    <div class="badges-grid" id="badgesGrid"></div>
+  </div>
+</section>
+
+<!-- ══ YOU MATTER ══ -->
+<section id="youmatter">
+  <div class="youmatter-inner reveal">
+    <span class="big-heart">💛</span>
+    <h2 class="youmatter-title">You matter more<br>than you know.</h2>
+    <p class="youmatter-body">
+      Phill, the fact that yesterday was hard doesn't mean you failed.
+      It means you care. It means you're trying.
+      And that alone makes you extraordinary.<br><br>
+      The right kitchen is already looking for someone exactly like you.
+      They just haven't found you yet — but they will.
+      And when they do? They'll wonder how they ever managed without you.
+    </p>
+    <div class="pills">
+      <div class="pill">You are talented 🍳</div>
+      <div class="pill">You are resilient 💪</div>
+      <div class="pill">You are worthy ✨</div>
+      <div class="pill">Rest is allowed 😴</div>
+      <div class="pill">Better days are near 🌅</div>
+      <div class="pill">Your food is magic 🌟</div>
+      <div class="pill">I believe in you 💛</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CHATBOT ══ -->
+<section id="chatbot">
+  <div class="chat-wrapper reveal">
+    <div class="chat-header">
+      <span class="section-tag">💬 Talk to Me</span>
+      <h2 class="section-title">Your personal <span>cheer bot</span></h2>
+      <p class="section-sub">Tell me how you're feeling, my love. I'm listening. 🍳</p>
+    </div>
+    <div class="chat-box">
+      <div class="chat-topbar">
+        <div class="chat-avatar">🍳</div>
+        <div>
+          <div class="chat-bot-name">Chef's Cheer Bot</div>
+          <div class="chat-bot-sub">Here for Phill, always 💛</div>
+        </div>
+        <div class="online-dot"></div>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="typing-row" id="typingRow">
+        <div class="typing-dots">
+          <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+        </div>
+      </div>
+      <div class="quick-wrap" id="quickWrap">
+        <div class="qr" onclick="sendQ('I need motivation')">💪 Motivate me</div>
+        <div class="qr" onclick="sendQ('I feel low today')">😔 I feel low</div>
+        <div class="qr" onclick="sendQ('Tell me something funny')">😄 Cheer me up</div>
+        <div class="qr" onclick="sendQ('Give me a chef affirmation')">🍳 Chef affirmation</div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatInput" placeholder="Tell me what's on your mind, Phill..." onkeydown="onKey(event)">
+        <button class="chat-send" onclick="sendMsg()" aria-label="Send message">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-heart">💛</span>
+  <p class="footer-text">Made with love for <span>Chef Phill</span> — because you deserve to know how amazing you are.</p>
+</footer>
+
+<script>
+/* ── Cursor ── */
+const cur=document.getElementById('cursor'),trail=document.getElementById('cursorTrail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-6+'px';cur.style.top=my-6+'px';});
+setInterval(()=>{tx+=(mx-tx)*0.12;ty+=(my-ty)*0.12;trail.style.left=tx-16+'px';trail.style.top=ty-16+'px';},16);
+
+/* ── Particles ── */
+(function(){
+  const container=document.getElementById('particles');
+  const chars=['✨','🍳','💛','🌟','🔥','⭐','🍴','🌿'];
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=chars[Math.floor(Math.random()*chars.length)];
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      font-size:${0.7+Math.random()*1}rem;
+      animation-duration:${8+Math.random()*14}s;
+      animation-delay:${Math.random()*12}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+/* ── Scroll reveal ── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ── Morning messages ── */
+const morningMsgs=[
+  `Good morning, Phill.\n\nI know yesterday was heavy — and I know you're still carrying some of it this morning. That's okay.\n\nBut before you do anything else, I need you to know: you are not behind. You are not failing. You are a chef with real talent, a kind heart, and a fire that yesterday could not put out.\n\nBreathe. Today is a fresh page.`,
+  `Hey, my love. You made it to today.\n\nThat already says something about who you are — you keep going even when it's hard. That's not weakness. That's the kind of strength that great chefs are made of.\n\nSomewhere today, take one moment and just appreciate your own hands. The meals they've created. The smiles they've caused. That's all you.`,
+  `Morning, Chef Phill. ☀️\n\nIf yesterday tried to make you doubt yourself, let today be the correction. Your talent didn't disappear. Your value didn't change. The right door is still waiting to open — and when it does, they'll be lucky to have you.\n\nToday, show up for yourself. Even just a little.`,
+  `Rise and shine, my love. 🌅\n\nEvery great chef has had days where the kitchen felt wrong and the world felt heavy. But here's the thing — they kept cooking anyway. And so will you.\n\nYour passion is your superpower. Don't let one rough day make you forget what you're capable of.`,
+  `Good morning, beautiful. ✨\n\nI just want you to start today knowing: I am proud of you. Not when you get the job. Not when everything is perfect. Right now, exactly as you are today.\n\nPhill, you are more than enough. Go be brilliant.`,
+];
+let lastMorning=-1;
+function newMorningMsg(){
+  let idx;
+  do{idx=Math.floor(Math.random()*morningMsgs.length);}while(idx===lastMorning);
+  lastMorning=idx;
+  const el=document.getElementById('morningText');
+  el.style.opacity='0';
+  setTimeout(()=>{el.textContent=morningMsgs[idx];el.style.opacity='1';el.style.transition='opacity 0.5s';},300);
+}
+newMorningMsg();
+
+/* ── Affirmations ── */
+const affirmations=[
+  {type:'chef',icon:'🍳',text:'Your hands create magic from simple ingredients. That is a rare and precious gift.'},
+  {type:'chef',icon:'🔥',text:'The way you season, the way you taste, the way you care about every plate — that is artistry.'},
+  {type:'chef',icon:'⭐',text:'Every chef who ever made it had days like yours. They kept going. So will you.'},
+  {type:'personal',icon:'💛',text:'Even on tough days, your heart stays kind and steady. That is not nothing — that is everything.'},
+  {type:'personal',icon:'🌟',text:'You are not behind in life, Phill. You are exactly where your story needs you to be right now.'},
+  {type:'personal',icon:'🌿',text:'Rest is not giving up. Rest is refuelling. Even the best stoves need to cool down sometimes.'},
+  {type:'job',icon:'🚪',text:'The right kitchen is waiting for you. It is not closed — it is just not open yet. Keep knocking.'},
+  {type:'job',icon:'🏆',text:'Your skill will open the door. Not luck. Not timing. You — and what you know how to do.'},
+  {type:'job',icon:'✨',text:"Somewhere, a hiring manager is dreaming of a chef exactly like you. They just haven't met you yet."},
+];
+const grid=document.getElementById('affGrid');
+affirmations.forEach(a=>{
+  const card=document.createElement('div');
+  card.className=`aff-card ${a.type}`;
+  const label = a.type==='chef' ? '🍳 Chef Affirmation' : a.type==='job' ? '💼 Job Journey' : '💛 Personal';
+  card.innerHTML=`<span class="aff-icon">${a.icon}</span><div class="aff-type">${label}</div><p class="aff-text">"${a.text}"</p>`;
+  grid.appendChild(card);
+});
+
+/* ── Badges ── */
+const badgeData=[
+  {e:'🥇',n:'Golden Spoon',d:'For resilience in the face of hard days'},
+  {e:'🔥',n:'Flame Keeper',d:'Because your passion never actually goes out'},
+  {e:'🌟',n:'Star Plater',d:'For creating food that makes people smile'},
+  {e:'💪',n:'Iron Chef Heart',d:"For showing up even when it's difficult"},
+  {e:'🍴',n:'Master of Flavour',d:'Your palate is one in a million'},
+  {e:'☀️',n:'Rising Star',d:'The best chapter of your career is still ahead'},
+  {e:'💛',n:'Most Loved Chef',d:'By me, always, no matter what'},
+  {e:'🏆',n:'Flavourful Comeback',d:'Every setback is just seasoning for your story'},
+];
+const badgesGrid=document.getElementById('badgesGrid');
+badgeData.forEach(b=>{
+  const item=document.createElement('div');
+  item.className='badge-item';
+  item.innerHTML=`<span class="badge-emoji">${b.e}</span><div class="badge-name">${b.n}</div><div class="badge-desc">${b.d}</div>`;
+  badgesGrid.appendChild(item);
+});
+
+/* ── Chatbot ── */
+const responses={
+  motivation:[
+    `Phill, listen to me. 💛\n\nYou are not just looking for a job — you are looking for the right stage for your talent. And that takes time. That is not failure. That is discernment.\n\nEvery chef who matters had a season of waiting. Yours is almost over. Keep going, my love.`,
+    `You want motivation? Here it is:\n\nYou have a gift that cannot be taught in school. You feel food. You understand flavour. You have the hands and the heart of a real chef.\n\nThe industry needs you. Don't let one hard season make you forget that. 🔥`,
+    `The right job is not running away from you — it's being prepared for you. While you wait, you grow. While you rest, you recharge. Your moment is coming, Chef Phill. 🌟`,
+  ],
+  lowfeel:[
+    `Oh, Phill. 💛\n\nI hear you. And it's okay to feel low — that just means you care deeply about your future. That's not weakness. That's love for your craft.\n\nBut can I tell you something? Low days don't cancel great talent. You are still the same chef with the same gift. The feeling will pass. You won't.`,
+    `Come here for a second. 🤗\n\nFeeling low is not the same as being behind. It's not the same as failing. It just means today is heavy — and that's allowed.\n\nYou don't have to be okay right now. Just rest, eat something good (you know how to make that), and let tomorrow try again.`,
+    `You're allowed to have this feeling, my love. Don't fight it too hard.\n\nBut when you're ready — and only when you're ready — remember: your talent is still there. Your dream is still there. And I'm still here cheering you on. 💛`,
+  ],
+  funny:[
+    `Okay, I got you. 😄\n\nIf confidence were a spice, Phill, you'd be extra-extra-seasoned.\n\nIf your cooking were a job offer, you'd already be hired.\n\nSomewhere out there, a hiring manager is dreaming of your food. They just can't find the right job posting for "Legend." 🏆`,
+    `A chef walks into an interview.\nThe interviewer says "What's your greatest weakness?"\nThe chef says "I care too much about every single dish I make."\nThe interviewer says "You're hired."\n\nThat chef? That's you, Phill. That's literally you. 😂🍳`,
+    `Fun fact: Studies show that chefs who have rough days make BETTER food the next day because they put all their feelings into it.\n\nIs that a real study? No. But it should be. And it would 100% be about you. 👨‍🍳✨`,
+  ],
+  chefaffirmation:[
+    `🍳 Chef Affirmation for Phill:\n\n"I am not just cooking food — I am creating experiences. Every plate I make carries intention, skill, and love. That is not something everyone can do. That is me."`,
+    `🔥 Today's Chef Affirmation:\n\n"My hands have learned things that took years to learn. The knowledge is in me — not in the job title I'm waiting for. I am already a chef. The right kitchen is just catching up."`,
+    `⭐ Phill's Daily Chef Affirmation:\n\n"I season with instinct. I plate with care. I taste with precision. These are not small things. These are the marks of a chef who truly loves what they do."`,
+  ],
+  default:[
+    `I hear you, Phill. 💛\n\nWhatever you're going through, I just want you to know — you are not going through it alone. You have your talent, your heart, and someone who believes in you completely.\n\nKeep going, my love. You've got this.`,
+    `Thank you for sharing that with me. 🌟\n\nYou know what I see when I look at you? A chef who cares. A person who keeps trying. Someone whose best days are absolutely still ahead.\n\nI'm proud of you, Phill. Always.`,
+    `Whatever you just said — I got you. 💛\n\nYou're doing better than you think. You're closer than you feel. And you are so, so loved.\n\nNow — can I hype you up a little? Because I really want to. 🍳✨`,
+  ],
+};
+
+function getBotResponse(msg){
+  const lo=msg.toLowerCase();
+  if(lo.includes('motivat')||lo.includes('inspire')||lo.includes('push')||lo.includes('encourage'))
+    return responses.motivation[Math.floor(Math.random()*responses.motivation.length)];
+  if(lo.includes('low')||lo.includes('sad')||lo.includes('bad')||lo.includes('rough')||lo.includes('hard')||lo.includes('down')||lo.includes('cry')||lo.includes('hurt'))
+    return responses.lowfeel[Math.floor(Math.random()*responses.lowfeel.length)];
+  if(lo.includes('funny')||lo.includes('joke')||lo.includes('laugh')||lo.includes('cheer')||lo.includes('smile'))
+    return responses.funny[Math.floor(Math.random()*responses.funny.length)];
+  if(lo.includes('chef')||lo.includes('cook')||lo.includes('kitchen')||lo.includes('food')||lo.includes('affirmation'))
+    return responses.chefaffirmation[Math.floor(Math.random()*responses.chefaffirmation.length)];
+  return responses.default[Math.floor(Math.random()*responses.default.length)];
+}
+
+function getNow(){return new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false});}
+
+function addChatMsg(txt,who){
+  const area=document.getElementById('chatMessages');
+  const wrap=document.createElement('div');
+  wrap.className='msg '+who;
+  if(who==='bot'){
+    const s=document.createElement('div');
+    s.className='msg-sender';s.textContent='🍳 Chef\'s Cheer Bot';
+    wrap.appendChild(s);
+  }
+  const b=document.createElement('div');
+  b.className='msg-bubble';b.textContent=txt;
+  const t=document.createElement('div');
+  t.className='msg-time';
+  t.textContent=getNow()+(who==='user'?' ✓✓':'');
+  wrap.appendChild(b);wrap.appendChild(t);
+  area.appendChild(wrap);
+  area.scrollTop=area.scrollHeight;
+}
+
+function showTyping(){document.getElementById('typingRow').classList.add('show');}
+function hideTyping(){document.getElementById('typingRow').classList.remove('show');}
+
+function doSend(msg){
+  if(!msg.trim())return;
+  addChatMsg(msg,'user');
+  showTyping();
+  setTimeout(()=>{
+    hideTyping();
+    addChatMsg(getBotResponse(msg),'bot');
+  },900+Math.random()*700);
+}
+
+function sendMsg(){
+  const inp=document.getElementById('chatInput');
+  doSend(inp.value);inp.value='';
+}
+function sendQ(v){doSend(v);}
+function onKey(e){if(e.key==='Enter')sendMsg();}
+
+// Boot message
+window.onload=()=>{
+  setTimeout(()=>{
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      addChatMsg(`Hey, Phill. 💛\n\nI'm your personal Cheer Bot — made just for you by someone who thinks you're pretty amazing.\n\nTell me how you're feeling today. Or pick one of the options below. I'm not going anywhere. 🍳`,'bot');
+    },1200);
+  },600);
+};
+</script>
+</body>
+</html>

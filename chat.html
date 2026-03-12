@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey Phill 🍳 — Just For You</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Variables ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --espresso:  #1C0F07;
+  --coffee:    #2E1A0E;
+  --mocha:     #4A2C1A;
+  --amber:     #E8920A;
+  --amber-lt:  #F5B942;
+  --saffron:   #F0C060;
+  --cream:     #FBF3E4;
+  --cream-dk:  #F0E0C4;
+  --burnt:     #C45C1A;
+  --rose:      #D4847A;
+  --sage:      #7A9E6A;
+  --ink:       #1C0F07;
+  --muted:     #9A7A5A;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Lato',sans-serif;
+  background:var(--espresso);
+  color:var(--cream);
+  overflow-x:hidden;
+  cursor:none; /* Custom cursor active */
+}
+
+/* ── Custom cursor ── */
+.cursor{
+  width:12px;height:12px;
+  background:var(--amber);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.15s ease;
+  mix-blend-mode:difference;
+}
+.cursor-trail{
+  width:32px;height:32px;
+  border:1.5px solid var(--amber-lt);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+  transition:all 0.25s ease;
+  opacity:0.5;
+}
+
+/* ── Ambient Effects ── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, #E8920A0C 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, #C45C1A08 0%, transparent 60%);
+  z-index:0;
+}
+
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{
+  position:absolute;
+  border-radius:50%;
+  animation:float linear infinite;
+  opacity:0;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:0.6;}
+  100%{transform:translateY(-100px) rotate(720deg);opacity:0;}
+}
+
+/* ── Layout & UI ── */
+section{position:relative;z-index:1;}
+
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(28,15,7,0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(232,146,10,0.1);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.1rem;
+  color:var(--amber);
+}
+.nav-links{display:flex;gap:20px;}
+.nav-links a{
+  font-size:0.78rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--amber);}
+
+/* ── Sections ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+  position:relative;
+  overflow:hidden;
+}
+
+#hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 70% at 50% 50%, #2E1A0E 0%, #1C0F07 100%);
+}
+
+.hero-content{position:relative;z-index:2;max-width:700px;}
+
+.greeting-tag{
+  display:inline-block;
+  background:rgba(232,146,10,0.15);
+  border:1px solid rgba(232,146,10,0.3);
+  border-radius:20px;
+  padding:6px 18px;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--amber-lt);
+  margin-bottom:20px;
+  animation:fadeDown 0.8s ease both;
+}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,5.5rem);
+  font-weight:900;
+  line-height:1;
+  margin-bottom:16px;
+  animation:fadeDown 0.8s 0.1s ease both;
+}
+.hero-title span{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--amber),var(--saffron),var(--amber-lt));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-size:1.15rem;
+  font-weight:300;
+  color:var(--cream-dk);
+  line-height:1.7;
+  margin-bottom:32px;
+  animation:fadeDown 0.8s 0.2s ease both;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--mocha),var(--coffee));
+  border:1px solid rgba(232,146,10,0.25);
+  border-radius:12px;
+  padding:14px 24px;
+  font-size:0.9rem;
+  font-weight:700;
+  color:var(--saffron);
+  margin-bottom:40px;
+  animation:fadeDown 0.8s 0.3s ease both;
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+.scroll-cta{
+  animation:fadeDown 0.8s 0.4s ease both;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:0.75rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--muted);
+}
+.scroll-arrow{
+  width:24px;height:24px;
+  border-right:2px solid var(--amber);
+  border-bottom:2px solid var(--amber);
+  transform:rotate(45deg);
+  animation:bounce 1.5s infinite;
+}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0);}50%{transform:rotate(45deg) translateY(6px);}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+
+/* Morning Section & Fixes */
+#morning{padding:80px 20px; background:linear-gradient(180deg,var(--espresso) 0%,var(--coffee) 100%);}
+.morning-inner{max-width:700px;margin:0 auto;text-align:center;}
+.section-tag{display:inline-block; font-size:0.72rem;font-weight:700; letter-spacing:3px;text-transform:uppercase; color:var(--amber);margin-bottom:16px;}
+
+.promo-box {
+  margin-bottom: 32px;
+}
+
+.morning-card{
+  background:linear-gradient(145deg,var(--mocha),#3A1F10);
+  border:1px solid rgba(232,146,10,0.2);
+  border-left:4px solid var(--amber);
+  border-radius:16px;
+  padding:36px 40px;
+  text-align:left;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  position:relative;overflow:hidden;
+}
+.morning-card::before{
+  content:'"';
+  position:absolute;top:-20px;right:20px;
+  font-family:'Playfair Display',serif;
+  font-size:8rem;color:rgba(232,146,10,0.08);
+  line-height:1;pointer-events:none;
+}
+.morning-text{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-style:italic;
+  line-height:1.8;color:var(--cream);
+  margin-bottom:20px;
+}
+.morning-sign{font-size:0.85rem;color:var(--amber-lt); font-weight:700;letter-spacing:1px;}
+.refresh-btn{
+  margin-top:24px; background:none; border:1.5px solid var(--amber); border-radius:30px;
+  color:var(--amber); padding:10px 24px; font-size:0.8rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif;
+  transition:all 0.2s;
+}
+.refresh-btn:hover{background:var(--amber);color:var(--espresso);}
+
+/* Affirmations Grid */
+#affirmations{padding:80px 20px; background:var(--coffee);}
+.aff-inner{max-width:900px;margin:0 auto;}
+.section-title{font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); font-weight:900;text-align:center; margin-bottom:8px;}
+.section-title span{font-style:italic;color:var(--amber);}
+.section-sub{text-align:center;color:var(--muted); font-size:0.9rem;margin-bottom:48px;}
+.aff-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px;}
+.aff-card{
+  background:linear-gradient(145deg,var(--mocha),var(--coffee));
+  border:1px solid rgba(232,146,10,0.15);
+  border-radius:16px; padding:28px 24px;
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.aff-card:hover{transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+.aff-icon{font-size:2rem;margin-bottom:14px; display:block;}
+.aff-type{font-size:0.68rem;font-weight:700; letter-spacing:2px;text-transform:uppercase; color:var(--amber);margin-bottom:10px;}
+.aff-text{font-family:'Playfair Display',serif; font-size:1.05rem;font-style:italic; line-height:1.7;color:var(--cream);}
+
+/* Achievement Badges */
+#badges{padding:80px 20px; background:linear-gradient(180deg,var(--coffee) 0%,var(--espresso) 100%);}
+.badges-inner{max-width:800px;margin:0 auto;text-align:center;}
+.badges-grid{display:flex;flex-wrap:wrap; justify-content:center;gap:16px; margin-top:40px;}
+.badge-item{
+  background:linear-gradient(135deg,var(--mocha),#3A1F10);
+  border:1px solid rgba(232,146,10,0.25);
+  border-radius:20px; padding:20px 24px;
+  min-width:180px; transition:all 0.25s;
+}
+.badge-emoji{font-size:2.5rem;display:block;margin-bottom:10px;}
+.badge-name{font-size:0.78rem;font-weight:700; color:var(--saffron);letter-spacing:1px; text-transform:uppercase;margin-bottom:6px;}
+.badge-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+
+/* You Matter Section */
+#youmatter{padding:100px 20px; background:var(--espresso); text-align:center;}
+.big-heart{font-size:4rem; display:block;margin-bottom:20px; animation:heartbeat 1.5s ease infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);} 100%{transform:scale(1);}}
+.youmatter-title{font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,3.5rem); font-weight:900;font-style:italic; color:var(--saffron); margin-bottom:16px; line-height:1.1;}
+.youmatter-body{font-size:1.05rem;font-weight:300; line-height:1.9;color:var(--cream-dk); margin-bottom:40px;}
+.pills{display:flex;flex-wrap:wrap; justify-content:center;gap:10px;}
+.pill{background:rgba(232,146,10,0.1); border:1px solid rgba(232,146,10,0.25); border-radius:30px; padding:8px 18px; font-size:0.82rem;font-weight:700; color:var(--amber-lt);}
+
+/* Chatbot Styles */
+#chatbot{padding:80px 20px 100px; background:linear-gradient(180deg,var(--espresso) 0%,var(--coffee) 100%);}
+.chat-wrapper{max-width:600px;margin:0 auto;}
+.chat-box{background:var(--mocha); border:1px solid rgba(232,146,10,0.2); border-radius:24px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+.chat-topbar{background:linear-gradient(135deg,#3A1F10,var(--mocha)); padding:16px 20px; display:flex;align-items:center;gap:12px; border-bottom:1px solid rgba(232,146,10,0.15);}
+.chat-avatar{width:44px;height:44px;border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--burnt)); display:flex;align-items:center;justify-content:center; font-size:1.4rem;flex-shrink:0;}
+.chat-messages{height:380px;overflow-y:auto; padding:20px 16px; display:flex;flex-direction:column;gap:10px;}
+.msg-bubble{padding:10px 16px; font-size:0.87rem;line-height:1.6; border-radius:18px; max-width:85%;}
+.msg.bot .msg-bubble{background:#FFFBF4; color:var(--ink); border-top-left-radius:4px;}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--burnt),var(--mocha)); color:var(--cream); align-self:flex-end; border-top-right-radius:4px;}
+.chat-input-row{padding:12px 16px; display:flex;gap:10px; background:rgba(0,0,0,0.2);}
+.chat-input{flex:1; background:rgba(255,255,255,0.08); border:1.5px solid rgba(232,146,10,0.25); border-radius:22px; padding:10px 18px; color:white; outline:none;}
+
+/* Music Control & Global Helper Classes */
+.music-ctrl {
+  position: fixed; bottom: 25px; right: 25px; z-index: 1000;
+  background: rgba(46, 26, 14, 0.9); border: 1px solid var(--amber); color: var(--amber);
+  padding: 10px; border-radius: 50px; cursor: pointer;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex; flex-direction: column; align-items: center; min-width: 60px;
+}
+.music-ctrl:hover { transform: scale(1.1) translateY(-5px); background: var(--amber); color: var(--espresso); }
+.music-ctrl.playing { border-color: var(--saffron); animation: pulse-amber 2s infinite; }
+.bien-label { font-size: 0.6rem; display: block; margin-top: 4px; font-weight: 700; letter-spacing: 1px; }
+
+.ghost-player {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+}
+
+.reveal{opacity:0;transform:translateY(30px); transition:all 0.7s cubic-bezier(.22,1,.36,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@keyframes pulse-amber {
+  0% { box-shadow: 0 0 0 0 rgba(232, 146, 10, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(232, 146, 10, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(232, 146, 10, 0); }
+}
+
+footer{padding:40px 20px; text-align:center; background:var(--espresso); border-top:1px solid rgba(232,146,10,0.1);}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+<div class="particles" id="particles"></div>
+
+<nav>
+  <div class="nav-logo">🍳 Chef Phill</div>
+  <div class="nav-links">
+    <a href="#morning">Morning</a>
+    <a href="#affirmations">Affirmations</a>
+    <a href="#badges">Badges</a>
+    <a href="#chatbot">Talk</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="greeting-tag">✨ A message just for you</div>
+    <h1 class="hero-title">Hey, <span>Phill.</span></h1>
+    <p class="hero-sub">You had a rough day. That's okay, my love.<br>This space was made to remind you of who you are.</p>
+    <div class="hero-badge">🏅 Chef Phill · Kitchen Legend</div>
+    <div class="scroll-cta"><span>Scroll down</span><div class="scroll-arrow"></div></div>
+  </div>
+</section>
+
+<section id="morning">
+  <div class="morning-inner reveal">
+    <span class="section-tag">☀️ Morning Message</span>
+    <h2 class="section-title promo-box">Good morning,<br><span>Babe.</span></h2>
+    <div class="morning-card">
+      <p class="morning-text" id="morningText">Loading message...</p>
+      <p class="morning-sign">— With all my love 💛</p>
+    </div>
+    <button class="refresh-btn" onclick="newMorningMsg()">✨ New Message</button>
+  </div>
+</section>
+
+<section id="affirmations">
+  <div class="aff-inner reveal">
+    <h2 class="section-title">You are <span>enough.</span></h2>
+    <div class="aff-grid" id="affGrid"></div>
+  </div>
+</section>
+
+<section id="badges">
+  <div class="badges-inner reveal">
+    <span class="section-tag">🏆 Achievements</span>
+    <h2 class="section-title">Chef Phill's <span>Trophy Room</span></h2>
+    <div class="badges-grid" id="badgesGrid"></div>
+  </div>
+</section>
+
+<section id="youmatter">
+  <div class="youmatter-inner reveal">
+    <span class="big-heart">💛</span>
+    <h2 class="youmatter-title">You matter more<br>than you know.</h2>
+    <p class="youmatter-body">Phill, one hard day doesn't define you. Your talent is real. The right kitchen is already looking for you.</p>
+    <div class="pills">
+        <div class="pill">Talented 🍳</div>
+        <div class="pill">Resilient 💪</div>
+        <div class="pill">Worthy ✨</div>
+    </div>
+  </div>
+</section>
+
+<section id="chatbot">
+  <div class="chat-wrapper reveal">
+    <div class="chat-box">
+      <div class="chat-topbar">
+        <div class="chat-avatar">🍳</div>
+        <div class="chat-bot-name">Chef's Cheer Bot</div>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatInput" placeholder="How are you feeling, Phill?">
+        <button class="refresh-btn" style="margin:0; padding:8px 15px;" onclick="sendMsg()">Send</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+    <p style="color:var(--muted);">Made with love for <span>Chef Phill</span></p>
+</footer>
+
+<div id="yt-player-container" class="ghost-player">
+    <div id="player"></div>
+</div>
+
+<button class="music-ctrl" id="musicBtn" onclick="toggleMusic()" aria-label="Toggle Background Music">
+  <span id="musicIcon">🎵</span>
+  <span class="bien-label">BIEN</span>
+</button>
+
+<script>
+/* ── YouTube API ── */
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+var isPlaying = false;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '0', width: '0', videoId: 'eaYqWNF1noM',
+    playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'eaYqWNF1noM' },
+    events: { 'onReady': (e) => e.target.setVolume(35) }
+  });
+}
+
+function toggleMusic() {
+  const btn = document.getElementById('musicBtn');
+  const icon = document.getElementById('musicIcon');
+  if (!isPlaying) {
+    player.playVideo();
+    icon.textContent = '⏸️';
+    btn.classList.add('playing');
+    isPlaying = true;
+  } else {
+    player.pauseVideo();
+    icon.textContent = '🎵';
+    btn.classList.remove('playing');
+    isPlaying = false;
+  }
+}
+
+/* ── Cursor & Particles ── */
+const cur=document.getElementById('cursor'),trail=document.getElementById('cursorTrail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-6+'px';cur.style.top=my-6+'px';});
+setInterval(()=>{tx+=(mx-tx)*0.12;ty+=(my-ty)*0.12;trail.style.left=tx-16+'px';trail.style.top=ty-16+'px';},16);
+
+(function(){
+  const container=document.getElementById('particles');
+  const chars=['✨','🍳','💛','🍴'];
+  for(let i=0;i<15;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=chars[Math.floor(Math.random()*chars.length)];
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(10+Math.random()*10)+'s';
+    p.style.animationDelay=Math.random()*5+'s';
+    container.appendChild(p);
+  }
+})();
+
+/* ── Scroll Logic ── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ── Content Population ── */
+const morningMsgs=[
+  "Good morning, Phill. You are a chef with real talent. Breathe. Today is a fresh page.",
+  "Hey, my love. You keep going even when it's hard. That's true strength. I'm proud of you.",
+  "Morning, Chef. Your passion is your superpower. Don't let one rough day win."
+];
+function newMorningMsg(){
+  const el=document.getElementById('morningText');
+  el.textContent=morningMsgs[Math.floor(Math.random()*morningMsgs.length)];
+}
+newMorningMsg();
+
+const affs=[
+  {icon:'🍳',text:'Your hands create magic from simple ingredients.'},
+  {icon:'⭐',text:'Every great chef had days like yours. They kept going.'},
+  {icon:'💛',text:'You are exactly where your story needs you to be.'}
+];
+const grid=document.getElementById('affGrid');
+affs.forEach(a=>{
+  const div=document.createElement('div');
+  div.className='aff-card';
+  div.innerHTML=`<span class="aff-icon">${a.icon}</span><p class="aff-text">${a.text}</p>`;
+  grid.appendChild(div);
+});
+
+const badges=[
+  {e:'🥇',n:'Golden Spoon',d:'For resilience in hard days'},
+  {e:'🔥',n:'Flame Keeper',d:'Your passion never goes out'}
+];
+const bGrid=document.getElementById('badgesGrid');
+badges.forEach(b=>{
+  const div=document.createElement('div');
+  div.className='badge-item';
+  div.innerHTML=`<span class="badge-emoji">${b.e}</span><div class="badge-name">${b.n}</div><div class="badge-desc">${b.d}</div>`;
+  bGrid.appendChild(div);
+});
+
+/* ── Chat Logic ── */
+function addChatMsg(txt,who){
+  const area=document.getElementById('chatMessages');
+  const wrap=document.createElement('div');
+  wrap.className='msg '+who;
+  wrap.innerHTML=`<div class="msg-bubble">${txt}</div>`;
+  area.appendChild(wrap);
+  area.scrollTop=area.scrollHeight;
+}
+function sendMsg(){
+  const inp=document.getElementById('chatInput');
+  if(!inp.value.trim()) return;
+  addChatMsg(inp.value, 'user');
+  const val = inp.value.toLowerCase();
+  inp.value = '';
+  setTimeout(()=>{
+    let reply = "I'm right here, Phill. You've got this. 💛";
+    if(val.includes('low')) reply = "It's okay to feel low, babe. Rest is allowed. Your talent isn't going anywhere.";
+    if(val.includes('motivation')) reply = "You are a kitchen legend in the making. Keep the fire burning! 🔥";
+    addChatMsg(reply, 'bot');
+  }, 800);
+}
+addChatMsg("Hey Phill! I'm your cheer bot. How are you feeling today? 🍳", 'bot');
+</script>
+</body>
+</html>
